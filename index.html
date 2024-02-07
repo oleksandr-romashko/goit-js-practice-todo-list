@@ -17,22 +17,22 @@
 
 <body>
 
-  <form class="todo-form" action="submit">
+  <form class="todo-form js-todo-form" action="submit">
     <h2 class="title">ToDo List</h2>
     <label class="field-label" for="task-description">Task</label>
-    <input class="description" name="description" id="task-description" type="text" placeholder="Task description"
-      required>
+    <input class="description" name="description" type="text" placeholder="Task description" required>
     <label class="field-label" for="task-priority">Priority</label>
-    <select class="priority" class="" name="priority" id="task-priority">
+    <select class="priority" class="" name="priority">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>
     </select>
     <button class="submit-btn" type="submit">Submit</button>
+    <!-- TODO Add form status upon action that opasity 0 after some time -->
   </form>
 
 
-  <ul class="todo-filter">
+  <ul class="todo-filter js-todo-filter">
     <li><button class="filter-btn" type="button">All</button></li>
     <li><button class="filter-btn" type="button">In progress</button></li>
     <li><button class="filter-btn" type="button">Done</button></li>
@@ -41,56 +41,7 @@
     <li><button class="filter-btn" type="button">High</button></li>
   </ul>
 
-  <ul class="todo-list">
-    <li class="todo-item">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-    <li class="todo-item done">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-    <li class="todo-item">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-    <li class="todo-item">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-    <li class="todo-item">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-    <li class="todo-item">
-      <span class="description">Item description description description description</span>
-      <span class="priority">Priority</span>
-      <div class="controls">
-        <button class="done-btn item-btn" type="button">Mark Done</button>
-        <button class="remove-btn item-btn" type="button">Remove</button>
-      </div>
-    </li>
-  </ul>
+  <ol class="todo-list js-todo-list"></ol>
 
 
   <script type="module" src="./js/main.js"></script>
