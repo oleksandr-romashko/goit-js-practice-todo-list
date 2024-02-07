@@ -51,7 +51,7 @@ body {
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
-  padding: 24px 40px 32px 40px;
+  padding: 24px 32px 32px 32px;
   border: 1px solid var(--color-grey);
   border-radius: 6px;
   background-color: var(--color-primary-white);
@@ -120,7 +120,7 @@ body {
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  max-width: 860px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,13 +148,13 @@ body {
 /* LIST OF TODO ITEMS */
 
 .todo-list {
+  margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-  max-width: 70%;
-  margin-top: 24px;
+  max-width: 900px;
 }
 
 .todo-item {
@@ -171,7 +171,7 @@ body {
 
 .todo-item .description {
   margin-right: auto;
-  max-width: 60%;
+  max-width: 100%;
 }
 
 .todo-item .priority {
@@ -179,9 +179,15 @@ body {
   cursor: default;
 }
 
+.done .description,
+.done .priority {
+  text-decoration: line-through;
+}
+
 .todo-item .controls {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  min-width: 256px;
   align-items: center;
   flex-wrap: wrap;
   column-gap: 16px;
@@ -197,28 +203,32 @@ body {
   color: var(--color-primary-white);
 }
 
-.todo-item .mark-done {
+.todo-item .done-btn {
   background-color: var(--color-green);
 }
 
-.todo-item .mark-done:hover,
-.todo-item .mark-done:focus {
+.todo-item .done-btn:hover,
+.todo-item .done-btn:focus {
   background-color: var(--color-green-darker);
 }
 
-.todo-item .mark-done:active {
+.todo-item .done-btn:active {
   background-color: var(--color-green-dark);
 }
 
-.todo-item .remove {
+.done .done-btn {
+  display: none;
+}
+
+.todo-item .remove-btn {
   background-color: var(--color-red);
 }
 
-.todo-item .remove:hover,
-.todo-item .remove:focus {
+.todo-item .remove-btn:hover,
+.todo-item .remove-btn:focus {
   background-color: var(--color-red-darker);
 }
 
-.todo-item .remove:active {
+.todo-item .remove-btn:active {
   background-color: var(--color-red-dark);
 }
