@@ -1,0 +1,224 @@
+:root {
+  /* COLORS */
+  --color-primary-black: #212121;
+  --color-primary-dark: #4a4a4a;
+  --color-primary-white: #fffefe;
+
+  --color-light: #f1eeee;
+  --color-light-darkened: #eae6e6;
+
+  --color-grey-lighter: rgb(204, 204, 214);
+  --color-grey: #ccc;
+  --color-grey-darker: #a5a5a5;
+
+  --color-green: #4caf50;
+  --color-green-darker: #319835;
+  --color-green-dark: #18781b;
+  --color-red: #f44336;
+  --color-red-darker: #ee3225;
+  --color-red-dark: #ca1a0d;
+  --color-blue: #3498db;
+  --color-blue-darker: #1a84ca;
+  --color-blue-dark: #085f98;
+
+  /* FONT-FAMILY */
+  --font-family-title: "Rubik", sans-serif;
+  --font-family-body: "Roboto", sans-serif;
+  --font-size-body: 16px;
+  --font-size-title: 28px;
+  --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --line-height-body: 1.5;
+
+  /* TIMING */
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  color: var(--color-primary-black);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+}
+
+/* SUBMIT FORM */
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 45%;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 24px 40px 32px 40px;
+  border: 1px solid var(--color-grey);
+  border-radius: 6px;
+  background-color: var(--color-primary-white);
+}
+
+.todo-form .title {
+  text-align: center;
+  font-family: var(--font-family-title);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-title);
+}
+
+.todo-form .field-label {
+  margin-top: 8px;
+}
+
+.todo-form .description,
+.todo-form .priority {
+  margin-top: 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-grey);
+  border-radius: 4px;
+  font-size: var(--font-size-body);
+}
+
+.todo-form .description:hover,
+.todo-form .description:focus {
+  border-color: var(--color-grey-darker);
+}
+
+.todo-form .description::placeholder {
+  font-style: italic;
+  color: var(--color-primary-dark);
+}
+
+.todo-form .priority {
+  background-color: var(--color-light);
+}
+
+.todo-form .priority:hover,
+.todo-form .priority:focus {
+  background-color: var(--color-light-darkened);
+}
+
+.todo-form .submit-btn {
+  margin-top: 24px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-green);
+  color: var(--color-primary-white);
+}
+
+.todo-form .submit-btn:hover,
+.todo-form .submit-btn:focus {
+  background-color: var(--color-green-darker);
+}
+
+.todo-form .submit-btn:active {
+  background-color: var(--color-green-dark);
+}
+
+/* FILTER */
+
+.todo-filter {
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.todo-filter .filter-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-blue);
+  color: var(--color-primary-white);
+}
+
+.todo-filter .filter-btn:hover,
+.todo-filter .filter-btn:focus {
+  background-color: var(--color-blue-darker);
+}
+
+.todo-filter .filter-btn:active {
+  background-color: var(--color-blue-dark);
+}
+
+/* LIST OF TODO ITEMS */
+
+.todo-list {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  max-width: 70%;
+  margin-top: 24px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 8px 24px;
+  border: 1px solid var(--color-grey);
+  border-radius: 5px;
+  background-color: var(--color-primary-white);
+}
+
+.todo-item .description {
+  margin-right: auto;
+  max-width: 60%;
+}
+
+.todo-item .priority {
+  color: var(--color-primary-dark);
+  cursor: default;
+}
+
+.todo-item .controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 8px;
+}
+
+.todo-item .item-btn {
+  min-width: 120px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: none;
+  border-radius: 4px;
+  color: var(--color-primary-white);
+}
+
+.todo-item .mark-done {
+  background-color: var(--color-green);
+}
+
+.todo-item .mark-done:hover,
+.todo-item .mark-done:focus {
+  background-color: var(--color-green-darker);
+}
+
+.todo-item .mark-done:active {
+  background-color: var(--color-green-dark);
+}
+
+.todo-item .remove {
+  background-color: var(--color-red);
+}
+
+.todo-item .remove:hover,
+.todo-item .remove:focus {
+  background-color: var(--color-red-darker);
+}
+
+.todo-item .remove:active {
+  background-color: var(--color-red-dark);
+}
