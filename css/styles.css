@@ -4,10 +4,11 @@
   --color-primary-dark: #4a4a4a;
   --color-primary-white: #fffefe;
 
+  --color-light-lighter: #E0E0E6;
   --color-light: #f1eeee;
   --color-light-darkened: #eae6e6;
 
-  --color-grey-lighter: rgb(204, 204, 214);
+  --color-grey-lighter: #ccccd6;
   --color-grey: #ccc;
   --color-grey-darker: #a5a5a5;
 
@@ -20,6 +21,10 @@
   --color-blue: #3498db;
   --color-blue-darker: #1a84ca;
   --color-blue-dark: #085f98;
+
+  /* BOX-SHADOW */
+
+  --box-shadow:box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
   /* FONT-FAMILY */
   --font-family-title: "Rubik", sans-serif;
@@ -42,15 +47,96 @@ body {
   line-height: var(--line-height-body);
 }
 
+/* LANGUAGE PICKER */
+
+.language-dropdown-picker {
+  display: flex;
+  top: 24px;
+  right: 20px;
+  flex-direction: column;
+  align-items: end;
+  position: absolute;
+}
+
+.language-dropdown-picker .dropdown-btn {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 8px;
+  line-height: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.lang-picker-icon {
+  transition: transform 350ms var(--timing-function);
+}
+
+.language-dropdown-picker .dropdown-btn:hover .lang-picker-icon,
+.language-dropdown-picker .dropdown-btn:focus .lang-picker-icon {
+  transform: scale(1.12);
+
+}
+
+.lang-picker-icon-arrow {
+  transform: scale(0);
+  padding-bottom: 8px;
+
+  transition: all 350ms var(--timing-function);
+}
+
+.language-dropdown-picker .dropdown-btn:hover .lang-picker-icon-arrow,
+.language-dropdown-picker .dropdown-btn:focus .lang-picker-icon-arrow {
+  transform: scale(1);
+}
+
+.language-dropdown-picker .dropdown-content {
+  width: fit-content;
+  padding: 8px 4px;
+  z-index: 1;
+  border: 1px solid var(--color-grey);
+  border-radius: 4px;
+  background-color: var(--color-light);
+  box-shadow: var(--box-shadow);
+}
+
+.language-dropdown-picker .dropdown-content-item {
+  display: flex;
+  justify-content: flex-start;
+  column-gap: 8px;
+  align-items: center;
+  padding: 4px 16px;
+  border-radius: 2px;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.language-dropdown-picker .is-current-lang {
+visibility:visible;
+}
+
+.language-dropdown-picker .dropdown-content-item:hover,
+.language-dropdown-picker .dropdown-content-item:focus {
+  background-color: var(--color-light-lighter);
+}
+
 /* SUBMIT FORM */
 
-.todo-form {
-  display: flex;
-  flex-direction: column;
+.todo-form-wrapper {
+  position: relative;
   max-width: 600px;
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.todo-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
   padding: 24px 32px 32px 32px;
   border: 1px solid var(--color-grey);
   border-radius: 6px;
@@ -70,11 +156,13 @@ body {
 
 .todo-form .description,
 .todo-form .priority {
+  width: 100%;
   margin-top: 4px;
   padding: 8px 12px;
   border: 1px solid var(--color-grey);
   border-radius: 4px;
   font-size: var(--font-size-body);
+  box-shadow: var(--box-shadow);
 }
 
 .todo-form .description:hover,
@@ -88,12 +176,19 @@ body {
 }
 
 .todo-form .priority {
-  background-color: var(--color-light);
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  background-image: url("data:image/svg+xml;utf8,<svg height='16' width='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><path d='M8.471 10.471c-0.125 0.125-0.295 0.195-0.471 0.195s-0.346-0.070-0.471-0.195l-3.771-3.771c-0.064-0.061-0.114-0.135-0.149-0.216s-0.053-0.169-0.054-0.257c-0.001-0.089 0.016-0.176 0.050-0.258s0.083-0.156 0.146-0.219c0.063-0.063 0.137-0.112 0.219-0.146s0.17-0.050 0.258-0.050c0.089 0.001 0.176 0.019 0.257 0.054s0.155 0.086 0.216 0.149l3.3 3.3 3.3-3.3c0.126-0.121 0.294-0.189 0.469-0.187s0.342 0.072 0.466 0.195c0.124 0.124 0.194 0.291 0.195 0.466s-0.066 0.343-0.187 0.469l-3.771 3.771z'/></svg>");
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 12px);
+  background-position-y: 50%;
+  background-color: var(--color-primary-white);
 }
 
 .todo-form .priority:hover,
 .todo-form .priority:focus {
-  background-color: var(--color-light-darkened);
+  background-color: var(--color-light);
 }
 
 .todo-form .submit-btn {
@@ -116,7 +211,10 @@ body {
 
 /* FILTER */
 
+
+
 .todo-filter {
+  height: fit-content;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;

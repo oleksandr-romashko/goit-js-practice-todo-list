@@ -1,7 +1,32 @@
+import * as locales from "./locales.js";
+import * as translator from "./translator.js";
+
 const storage = {
+  _LS_CURRENT_LOCALE: "TODO_CURRENT_LOCALE",
   _LS_LATEST_TASK_ID_KEY: "TODO_GLOBAL_LATEST_TASK_ID",
   _LS_WIP_TASK_DESCRIPTION_KEY: "TODO_WIP_TASK_DESCRIPTION",
   _LS_TASKS_KEY: "TODO_TASKS",
+  getCurrentLocale: function () {
+    let currentLocaleCode = this._getValue(this._LS_CURRENT_LOCALE);
+
+    // TODO: separate both cases. Second one is for the case of unvalid value
+    // TODO: of the lang code (error or depricated).
+    // TODO: default lang will be applied and interface lang will be reseted.
+    // TODO: it is better to inform user about this change somehow (label/alert/...)
+    // TODO: but may frustrate if first time visit
+    if (
+      !currentLocaleCode ||
+      !~locales.getLocaleIndexByCode(currentLocaleCode)
+    ) {
+      currentLocaleCode = locales.getDefaultLocaleCode();
+      this._setValue(this._LS_CURRENT_LOCALE, currentLocaleCode);
+    }
+
+    return locales.getLocaleByCode(currentLocaleCode);
+  },
+  updateLocale: function (localeCode) {
+    this._setValue(this._LS_CURRENT_LOCALE, localeCode);
+  },
   getTasksInitValue: function () {
     return this._getValue(this._LS_TASKS_KEY);
   },
@@ -109,40 +134,129 @@ const tasks = {
 
 //TODO Add "x" button to the input to clear content
 //TODO OnFormLoad -> focus on input (maybe) - mobile will open keyboard - not appropriate
+//TODO Language select in top right corner of the form. stored in array and each lang according to select selectedIndex
+//TODO Language selector on hover making arrow normal size, otherwise minimized to lower buttom, animated
 const elements = {
+  _languagePicker: document.querySelector(".js-lang-picker"),
   _form: document.querySelector(".js-todo-form"),
   _filter: document.querySelector(".js-todo-filter"),
   _list: document.querySelector(".js-todo-list"),
   init: function () {
-    this._form.addEventListener("submit", onSubmit);
-    this._form.addEventListener("input", onInput);
-    this._list.addEventListener("click", onTaskClick);
+    this._renderLanguageOptions();
+    this._languagePicker.addEventListener("click", onLangPickerClick);
+    window.addEventListener("click", onWindowClick);
 
     const storageDescValue = storage.getDescriptionInitValue();
     this._form.description.value = storageDescValue ? storageDescValue : "";
+    this._form.addEventListener("submit", onSubmit);
+    this._form.addEventListener("input", onInput);
+
+    this._list.addEventListener("click", onTaskClick);
 
     this.renderToDoList(tasks.getList());
+
+    const currentLocale = storage.getCurrentLocale();
+    this.translatePage(currentLocale);
+    if (currentLocale.code === locales.getDefaultLocaleCode()) {
+      console.log(
+        `Loaded default interface \'${currentLocale.name}\' (\'${currentLocale.alias}\', \'${currentLocale.code}\').`
+      );
+    } else {
+      console.log(
+        `Loaded interface \'${currentLocale.name}\' (\'${currentLocale.alias}\', \'${currentLocale.code}\').`
+      );
+    }
+  },
+  translatePage: function (locale) {
+    translator.translatePage(locale, tasks.getList().length);
+    this._renderLanguageOptions();
+  },
+  checkDisplayFilter() {
+    if (tasks.getList().length > 1) {
+      this._filter.classList.remove("visuallyhidden");
+    } else {
+      this._filter.classList.add("visuallyhidden");
+    }
   },
   renderToDoList: function () {
+    elements.checkDisplayFilter();
+    const markdown = this._createToDoList(tasks.getList());
     this._list.innerHTML = "";
-    this._list.insertAdjacentHTML(
-      "beforeend",
-      this.createToDoList(tasks.getList())
+    this._list.insertAdjacentHTML("beforeend", markdown);
+  },
+  _renderLanguageOptions: function () {
+    const markup = locales.list
+      .filter(({ isShown }) => isShown)
+      .map(el => this._createLanguageItemMarkup(el))
+      .join("");
+    this._languagePicker.lastElementChild.innerHTML = "";
+    this._languagePicker.lastElementChild.insertAdjacentHTML(
+      "afterbegin",
+      markup
     );
   },
-  createToDoList: function (arr) {
-    return arr.map(el => this.createTaskMarkup(el)).join("");
-  },
-  createTaskMarkup: function ({ description, priority, isDone, id }) {
-    console.log(isDone);
-    const isDoneClass = isDone === "true" ? "done" : "";
+  _createLanguageItemMarkup({ code, name, htmlLangAttribute, iconId }) {
+    const currentLocale = storage.getCurrentLocale();
+    const classIsCurrentLang =
+      currentLocale.code === code ? "js-is-current-lang" : "";
     return `
-    <li class="todo-item ${isDoneClass}" data-is-done="${isDone}" data-task-id="${id}">
+      <li lang="${htmlLangAttribute}" class="dropdown-content-item js-lang-dropdown-item ${classIsCurrentLang}" href="#" data-lang-code="${code}">
+        <svg class="lang-checkmark ${
+          currentLocale.code === code ? "is-current-lang" : ""
+        }" width="24" height="24" visibility="hidden">
+          <use href="./img/sprite.svg#checkmark"></use>
+        </svg>
+        <svg class="lang-picker-icon" width="24" height="24">
+          <use href="./img/sprite.svg#${iconId}"></use>
+        </svg>
+        <span>${name}</span>
+      </li>
+    `;
+  },
+  _createToDoList: function (tasksList) {
+    const currentLocale = storage.getCurrentLocale();
+    const taskBtnsText = translator.getTaskBtnsTranslation(currentLocale.code);
+
+    return tasksList
+      .map(el => this._createTaskMarkup(currentLocale, el, taskBtnsText))
+      .join("");
+  },
+  _createTaskMarkup: function (
+    currentLocale,
+    { id, description, priority: priorityValue, isDone },
+    { doneBtnText, removeBtnText }
+  ) {
+    const priorityText = translator.translateTaskValue(
+      currentLocale.code,
+      priorityValue
+    );
+    const isDoneClass = isDone === "true" ? "done" : "";
+
+    return `
+    <li
+        class="todo-item ${isDoneClass}" 
+        data-is-done="${isDone}" 
+        data-task-id="${id}" 
+    >
       <p class="description" name="description">${description}</p>
-      <span class="priority">${priority}</span>
+      <span
+        class="priority translation-priority-${priorityValue}"
+        lang="${currentLocale.htmlLangAttribute}">
+          ${priorityText}
+      </span>
       <div class="controls">
-        <button class="done-btn item-btn js-done" type="button">Mark Done</button>
-        <button class="remove-btn item-btn js-remove" type="button">Remove</button>
+        <button
+          class="done-btn item-btn js-done translation-task-done-btn"
+          type="button"
+          lang="${currentLocale.htmlLangAttribute}">
+            ${doneBtnText}
+        </button>
+        <button
+          class="remove-btn item-btn js-remove translation-task-remove-btn"
+          type="button"
+          lang="${currentLocale.htmlLangAttribute}">
+            ${removeBtnText}
+        </button>
       </div>
     </li>
   `;
@@ -151,6 +265,37 @@ const elements = {
 
 tasks.init();
 elements.init();
+
+function onLangPickerClick({ target }) {
+  const dropdownBtn = target.closest(".js-drop-btn");
+  if (dropdownBtn) {
+    const content = dropdownBtn.nextElementSibling;
+    if (content.hidden) {
+      content.hidden = false;
+    } else {
+      content.hidden = true;
+    }
+  }
+
+  const dropdownItem = target.closest(".js-lang-dropdown-item");
+  if (dropdownItem) {
+    dropdownItem.closest(".dropdown-content").hidden = true;
+    const langCode = dropdownItem.dataset.langCode;
+    const locale = locales.getLocaleByCode(langCode);
+    if (dropdownItem.classList.contains("js-is-current-lang")) {
+      console.log(
+        `Staying on the same language \'${locale.name}\' (${locale.alias}, ${locale.code}).`
+      );
+    } else {
+      // Switch to other language
+      storage.updateLocale(langCode);
+      elements.translatePage(locale);
+      console.log(
+        `Switched to language \'${locale.name}\' (${locale.alias}, ${locale.code}).`
+      );
+    }
+  }
+}
 
 function onSubmit(event) {
   event.preventDefault();
@@ -161,13 +306,12 @@ function onSubmit(event) {
       return (
         el.name &&
         !!~el.selectedIndex &&
-        (formValues[el.name] = el[el.selectedIndex].innerText)
+        (formValues[el.name] = el[el.selectedIndex].value)
       );
     }
 
     return el.name && el.value && (formValues[el.name] = el.value);
   });
-
   tasks.addTask(formValues);
   storage.updateStorage();
   elements.renderToDoList();
@@ -198,26 +342,40 @@ function onTaskClick({ target }) {
 function handleDone(target) {
   const task = target.closest(".todo-item");
   const taskId = task.dataset.taskId;
-  const text = task.firstElementChild.innerText;
 
   task.classList.add("done");
   tasks.updateDoneStatus(taskId, "true");
   storage.updateStorage();
 
-  console.log(`Task \`${text}\` with id \`${taskId}\` was marked as Done ✔`);
+  console.log(`The task with id \`${taskId}\` was marked as ✔ Done.`);
 }
 
 function handleRemove(target) {
   const task = target.closest(".todo-item");
   const taskId = Number(task.dataset.taskId);
-  const text = task.firstElementChild.innerText;
   const isDone = task.classList.contains("done");
 
   tasks.removeTaskById(taskId);
   storage.updateStorage();
   elements.renderToDoList();
 
-  console.log(
-    `Task \`${text}\` with id \`${taskId}\` and done status \`${isDone}\` was removed ❌`
-  );
+  if (isDone) {
+    console.log(
+      `The task with id \`${taskId}\` and which was done has been ❌ removed.`
+    );
+  } else {
+    console.log(
+      `The task with id \`${taskId}\` and which was not done has been ❌ removed.`
+    );
+  }
+}
+
+// Close the dropdown menu if the user clicks outside of it
+function onWindowClick(event) {
+  if (!event.target.closest(".js-lang-picker")) {
+    const content = elements._languagePicker.lastElementChild;
+    if (!content.hidden) {
+      content.hidden = true;
+    }
+  }
 }
