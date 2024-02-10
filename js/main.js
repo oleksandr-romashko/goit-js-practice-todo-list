@@ -139,7 +139,7 @@ const tasks = {
 const elements = {
   SORTING: {
     current: "all",
-    order: "↓",
+    order: "⬇",
     options: {
       all: "all",
       inProgress: "inProgress",
@@ -148,10 +148,10 @@ const elements = {
       medium: "medium",
       high: "high",
       orders: {
-        orderDesc: "↓", // the newest dates will be at the top of the list
-        orderDescDone: "↧",
-        orderAsc: "↑", // the oldest tasks will be at the top of the list
-        orderAscDone: "↥",
+        orderDesc: "⬇", // the newest dates will be at the top of the list
+        orderDescDone: "⇟",
+        orderAsc: "⬆", // the oldest tasks will be at the top of the list
+        orderAscDone: "⇞",
       },
     },
   },
@@ -359,7 +359,7 @@ const elements = {
 
     return `
     <li
-        class="todo-item ${isDoneClass}" 
+        class="todo-item js-todo-item ${isDoneClass}" 
         data-is-done="${isDone}" 
         data-task-id="${id}" 
     >
@@ -371,16 +371,18 @@ const elements = {
       </span>
       <div class="controls">
         <button
-          class="done-btn item-btn js-done translation-task-done-btn"
+          class="done-btn item-btn js-item-btn js-btn-done translation-task-done-btn"
           type="button"
           lang="${currentLocale.htmlLangAttribute}">
-            ${doneBtnText}
+              <span class="done-btn-icon translation-task-done-btn-icon">✔</span>
+              <span class="translation-task-done-btn-text">${doneBtnText}</span>
         </button>
         <button
-          class="remove-btn item-btn js-remove translation-task-remove-btn"
+          class="remove-btn item-btn js-item-btn js-btn-remove translation-task-remove-btn"
           type="button"
           lang="${currentLocale.htmlLangAttribute}">
-            ${removeBtnText}
+              <span class="remove-btn-icon translation-task-remove-btn-icon">✘</span>
+              <span class="translation-task-remove-btn-text">${removeBtnText}</span>
         </button>
       </div>
     </li>
@@ -493,19 +495,19 @@ function onSortingClick({ target }) {
 
 function onTaskClick({ target }) {
   if (
-    target.classList.contains("js-done") &&
+    target.closest(".item-btn").classList.contains("js-btn-done") &&
     target.closest(".todo-item").dataset.isDone === "false"
   ) {
     handleDone(target);
   }
 
-  if (target.classList.contains("js-remove")) {
+  if (target.closest(".item-btn").classList.contains("js-btn-remove")) {
     handleRemove(target);
   }
 }
 
 function handleDone(target) {
-  const task = target.closest(".todo-item");
+  const task = target.closest(".js-todo-item");
   const taskId = task.dataset.taskId;
 
   task.classList.add("done");
@@ -519,7 +521,7 @@ function handleDone(target) {
 }
 
 function handleRemove(target) {
-  const task = target.closest(".todo-item");
+  const task = target.closest(".js-todo-item");
   const taskId = Number(task.dataset.taskId);
   const isDone = task.classList.contains("done");
 
