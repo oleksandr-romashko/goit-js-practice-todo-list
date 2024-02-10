@@ -92,13 +92,13 @@ const _translations = [
   {
     description: "form submit button icon",
     classSelector: ".translation-submit-btn-icon",
-    "en-US": { textContent: "➕" },
-    "en-GB": { textContent: "➕" },
+    "en-US": { textContent: "+" },
+    "en-GB": { textContent: "+" },
     "de-DE": {},
-    "cs-CZ": { textContent: "➕" },
+    "cs-CZ": { textContent: "+" },
     "fr-FR": {},
-    "uk-UA": { textContent: "➕" },
-    "ru-RU": { textContent: "➕" },
+    "uk-UA": { textContent: "+" },
+    "ru-RU": { textContent: "+" },
   },
   {
     description: "form submit button text",
