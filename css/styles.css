@@ -70,16 +70,6 @@ body {
   border: none;
 }
 
-.lang-picker-icon {
-  transition: transform 350ms var(--timing-function);
-}
-
-.language-dropdown-picker .dropdown-btn:hover .lang-picker-icon,
-.language-dropdown-picker .dropdown-btn:focus .lang-picker-icon {
-  transform: scale(1.12);
-
-}
-
 .lang-picker-icon-arrow {
   transform: scale(0);
   padding-bottom: 8px;
@@ -215,7 +205,8 @@ visibility:visible;
 }
 
 .todo-form .submit-btn .submit-btn-icon {
-  font-size: 14px;
+  font-size: 24px;
+  line-height: 0;
 }
 
 /* FILTER */
@@ -235,7 +226,6 @@ visibility:visible;
 
 .todo-filter .filter-btn {
   position: relative;
-
   padding: 8px 24px;
   border: none;
   border-radius: 4px;
@@ -262,8 +252,8 @@ border: 1px solid var(--color-grey);
 
 .todo-filter .filter-sort-sign {
   position: absolute;
-  top: 16px;
-  right: 8px;
+  top: 50%;
+  right: 9px;
   line-height: 0;
 }
 
@@ -334,6 +324,7 @@ border: 1px solid var(--color-grey);
 
 .todo-item .done-btn .done-btn-icon {
   font-size: 14px;
+    line-height: 0;
 }
 
 .todo-item .done-btn {
@@ -351,6 +342,7 @@ border: 1px solid var(--color-grey);
 
 .todo-item .remove-btn .remove-btn-icon {
   font-size: 13px;
+  line-height: 0;
 }
 
 .todo-item.done .done-btn {

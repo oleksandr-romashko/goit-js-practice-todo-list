@@ -68,3 +68,11 @@ select {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+.scalable {
+  transition: transform 350ms var(--timing-function);
+}
+
+.scalable:hover {
+  transform: scale(1.12);
+}
