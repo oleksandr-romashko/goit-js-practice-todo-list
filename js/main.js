@@ -132,11 +132,13 @@ const tasks = {
   },
 };
 
-//TODO Add "x" button to the input to clear content
-//TODO OnFormLoad -> focus on input (maybe) - mobile will open keyboard - not appropriate
-//TODO Language select in top right corner of the form. stored in array and each lang according to select selectedIndex
-//TODO Language selector on hover making arrow normal size, otherwise minimized to lower buttom, animated
+// TODO Add "x" button to the input field to clear input text content
+// TODO OnFormLoad -> focus on input (maybe) - mobile will open keyboard - not appropriate
 const elements = {
+  // TODO Add possibility of setting in (lang drompown or separate settings icon on form to the left), possible dropdown or modal
+  SETTINGS: {
+    REMOVE_TASK_INSTANTLY_AFTER_MARKED_AS_DONE_IN_PROGRESS_FILTER: false,
+  },
   SORTING: {
     current: "all",
     order: "⬇",
@@ -159,6 +161,7 @@ const elements = {
   _form: document.querySelector(".js-todo-form"),
   _filter: document.querySelector(".js-todo-filter"),
   _list: document.querySelector(".js-todo-list"),
+  _clearDataBtn: document.querySelector(".js-clear-storage-btn"),
   _status: document.querySelector(".todo-status"),
   init: function () {
     this._renderLanguageOptions();
@@ -173,6 +176,8 @@ const elements = {
     this._filter.addEventListener("click", onSortingClick);
 
     this._list.addEventListener("click", onTaskClick);
+
+    this._clearDataBtn.addEventListener("click", onClearAllDataClick);
 
     this.renderToDoList(tasks.getList());
 
@@ -226,9 +231,9 @@ const elements = {
   renderToDoList: function () {
     this.updateDisplayFilter();
     const sortedTasks = this.sortTasks();
-    const markdown = this._createToDoList(sortedTasks);
+    const tasksMarkdown = this._createToDoList(sortedTasks);
     this._list.innerHTML = "";
-    this._list.insertAdjacentHTML("beforeend", markdown);
+    this._list.insertAdjacentHTML("afterbegin", tasksMarkdown);
     this.updateToDoStatus();
   },
   sortTasks: function () {
@@ -325,16 +330,21 @@ const elements = {
     const classIsCurrentLang =
       currentLocale.code === code ? "js-is-current-lang" : "";
     return `
-      <li lang="${htmlLangAttribute}" class="dropdown-content-item js-lang-dropdown-item ${classIsCurrentLang}" href="#" data-lang-code="${code}">
-        <svg class="lang-checkmark ${
-          currentLocale.code === code ? "is-current-lang" : ""
-        }" width="24" height="24" visibility="hidden">
-          <use href="./img/sprite.svg#checkmark"></use>
-        </svg>
-        <svg class="lang-picker-icon" width="24" height="24">
-          <use href="./img/sprite.svg#${iconId}"></use>
-        </svg>
-        <span>${name}</span>
+      <li lang="${htmlLangAttribute}" 
+        class="dropdown-content-item prevent-select js-lang-dropdown-item ${classIsCurrentLang}" 
+        href="#" data-lang-code="${code}">
+          <svg class="lang-checkmark ${
+            currentLocale.code === code ? "is-current-lang" : ""
+          }"
+            width="24" 
+            height="24" 
+            visibility="hidden">
+              <use href="./img/sprite.svg#checkmark"></use>
+          </svg>
+          <svg class="lang-picker-icon" width="24" height="24">
+              <use href="./img/sprite.svg#${iconId}"></use>
+          </svg>
+          <span>${name}</span>
       </li>
     `;
   },
@@ -506,6 +516,16 @@ function onTaskClick({ target }) {
   }
 }
 
+function onClearAllDataClick({ target }) {
+  const clearDataMessage =
+    "Are you sure you want to delete all app data?\nCan't be undone and all the information (tasks and settings) will be lost!\nPlease, confirm to proceed.";
+  if (confirm(clearDataMessage)) {
+    localStorage.clear();
+    console.log("All data in local storage has been cleared.");
+    location.reload();
+  }
+}
+
 function handleDone(target) {
   const task = target.closest(".js-todo-item");
   const taskId = task.dataset.taskId;
@@ -514,8 +534,12 @@ function handleDone(target) {
   tasks.updateDoneStatus(taskId, "true");
   storage.updateStorage();
 
-  // add if want marked as done task to disapear instantly
-  // elements.renderToDoList();
+  if (
+    elements.SETTINGS
+      .REMOVE_TASK_INSTANTLY_AFTER_MARKED_AS_DONE_IN_PROGRESS_FILTER
+  ) {
+    elements.renderToDoList();
+  }
 
   console.log(`The task with id \`${taskId}\` was marked as ✔ Done.`);
 }
@@ -531,11 +555,11 @@ function handleRemove(target) {
 
   if (isDone) {
     console.log(
-      `The task with id \`${taskId}\` and which was done has been ❌ removed.`
+      `The task with id \`${taskId}\` and which was done has been ✘ removed.`
     );
   } else {
     console.log(
-      `The task with id \`${taskId}\` and which was not done has been ❌ removed.`
+      `The task with id \`${taskId}\` and which was not done has been ✘ removed.`
     );
   }
 }

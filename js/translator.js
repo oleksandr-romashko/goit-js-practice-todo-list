@@ -37,13 +37,28 @@ const _translations = [
   {
     description: "form description input",
     classSelector: ".translation-description-input",
-    "en-US": { placeholder: "Description" },
-    "en-GB": { placeholder: "Description" },
+    "en-US": {
+      placeholder: "Description",
+      title: "Please fill out this field and describe the task",
+    },
+    "en-GB": {
+      placeholder: "Description",
+      title: "Please fill out this field and describe the task",
+    },
     "de-DE": {},
-    "cs-CZ": { placeholder: "Popis" },
+    "cs-CZ": {
+      placeholder: "Popis",
+      title: "Vyplňte prosím toto pole a popište úkol",
+    },
     "fr-FR": {},
-    "uk-UA": { placeholder: "Опис" },
-    "ru-RU": { placeholder: "Описание" },
+    "uk-UA": {
+      placeholder: "Опис",
+      title: "Будь ласка, заповніть це поле та опишіть завдання",
+    },
+    "ru-RU": {
+      placeholder: "Описание",
+      title: "Пожалуйста заполните это поле и опишите задачу",
+    },
   },
   {
     description: "form priority select label",
@@ -55,6 +70,17 @@ const _translations = [
     "fr-FR": {},
     "uk-UA": { textContent: "Пріоритет" },
     "ru-RU": { textContent: "Приоритет" },
+  },
+  {
+    description: "form priority select label",
+    classSelector: ".translation-priority-select",
+    "en-US": { title: "Set the task priority" },
+    "en-GB": { title: "Set the task priority" },
+    "de-DE": {},
+    "cs-CZ": { title: "Nastavit prioritu úkolu" },
+    "fr-FR": {},
+    "uk-UA": { title: "Задати пріоритет завданню" },
+    "ru-RU": { title: "Установить приоритет задачи" },
   },
   {
     description: "form priority select value low",
