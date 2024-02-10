@@ -35,7 +35,7 @@
     </div>
 
     <form class="todo-form js-todo-form" action="submit">
-      <h2 class="title translation-form-title"></h2>
+      <h1 class="title translation-form-title"></h1>
       <label class="field-label translation-description-label" for="task-description">Task</label>
       <input class="description js-description translation-description-input" name="description" id="task-description"
         type="text" placeholder="" required>
@@ -46,21 +46,54 @@
         <option class="priority-item translation-priority-high" value="high">High</option>
       </select>
       <button class="submit-btn translation-submit-btn" type="submit">Submit</button>
-      <!-- TODO Add form status upon action that opasity 0 after some time -->
+      <!-- TODO Add form status upon action then opasity 0 after some time -->
     </form>
   </div>
 
-  <ul class="todo-filter js-todo-filter visuallyhidden">
-    <li><button class="filter-btn translation-filter-all-btn" type="button" disabled>All</button></li>
-    <li><button class="filter-btn translation-filter-in-progress-btn" type="button" disabled>In progress</button></li>
-    <li><button class="filter-btn translation-filter-done-btn" type="button" disabled>Done</button></li>
-    <li><button class="filter-btn translation-filter-low-btn" type="button" disabled>Low</button></li>
-    <li><button class="filter-btn translation-filter-medium-btn" type="button" disabled>Medium</button></li>
-    <li><button class="filter-btn translation-filter-high-btn" type="button" disabled>High</button></li>
+  <ul class="todo-filter js-todo-filter">
+    <li class="js-todo-filter-item">
+      <button class="filter-btn" type="button" data-sorting-setting="all">
+        <span class="translation-filter-all-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
+    <li class="js-todo-filter-item">
+      <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="inProgress">
+        <span class="translation-filter-in-progress-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
+    <li class="js-todo-filter-item js-filter-donable">
+      <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="done">
+        <span class="translation-filter-done-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
+    <li class="js-todo-filter-item">
+      <button class="filter-btn" type="button" data-sorting-setting="low">
+        <span class="translation-filter-low-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
+    <li class="js-todo-filter-item">
+      <button class="filter-btn" type="button" data-sorting-setting="medium">
+        <span class="translation-filter-medium-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
+    <li class="js-todo-filter-item">
+      <button class="filter-btn" type="button" data-sorting-setting="high">
+        <span class="translation-filter-high-btn-text"></span>
+        <span class="filter-sort-sign"></span>
+      </button>
+    </li>
   </ul>
 
   <ol class="todo-list js-todo-list"></ol>
-
+  <div class="todo-status">
+    <p class="no-tasks"></p>
+    <p class="filter-empty"></p>
+  </div>
 
   <script type="module" src="./js/main.js"></script>
 </body>

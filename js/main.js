@@ -137,10 +137,29 @@ const tasks = {
 //TODO Language select in top right corner of the form. stored in array and each lang according to select selectedIndex
 //TODO Language selector on hover making arrow normal size, otherwise minimized to lower buttom, animated
 const elements = {
+  SORTING: {
+    current: "all",
+    order: "↓",
+    options: {
+      all: "all",
+      inProgress: "inProgress",
+      done: "done",
+      low: "low",
+      medium: "medium",
+      high: "high",
+      orders: {
+        orderDesc: "↓", // the newest dates will be at the top of the list
+        orderDescDone: "↧",
+        orderAsc: "↑", // the oldest tasks will be at the top of the list
+        orderAscDone: "↥",
+      },
+    },
+  },
   _languagePicker: document.querySelector(".js-lang-picker"),
   _form: document.querySelector(".js-todo-form"),
   _filter: document.querySelector(".js-todo-filter"),
   _list: document.querySelector(".js-todo-list"),
+  _status: document.querySelector(".todo-status"),
   init: function () {
     this._renderLanguageOptions();
     this._languagePicker.addEventListener("click", onLangPickerClick);
@@ -150,6 +169,8 @@ const elements = {
     this._form.description.value = storageDescValue ? storageDescValue : "";
     this._form.addEventListener("submit", onSubmit);
     this._form.addEventListener("input", onInput);
+
+    this._filter.addEventListener("click", onSortingClick);
 
     this._list.addEventListener("click", onTaskClick);
 
@@ -171,18 +192,122 @@ const elements = {
     translator.translatePage(locale, tasks.getList().length);
     this._renderLanguageOptions();
   },
-  checkDisplayFilter() {
-    if (tasks.getList().length > 1) {
-      this._filter.classList.remove("visuallyhidden");
-    } else {
+  updateDisplayFilter() {
+    if (!tasks.getList().length) {
       this._filter.classList.add("visuallyhidden");
+    } else {
+      this._filter.classList.remove("visuallyhidden");
+    }
+
+    const filterItems = this._filter.children;
+    [...filterItems].forEach(el => {
+      const element = el.firstElementChild;
+      if (element.dataset.sortingSetting === this.SORTING.current) {
+        element.classList.add("current-filter");
+        element.lastElementChild.textContent = this.SORTING.order;
+      } else {
+        element.classList.remove("current-filter");
+        element.lastElementChild.textContent = "";
+      }
+    });
+  },
+  updateToDoStatus() {
+    if (!tasks.getList().length) {
+      this._status.firstElementChild.classList.remove("visuallyhidden");
+    } else {
+      this._status.firstElementChild.classList.add("visuallyhidden");
+    }
+    if (tasks.getList().length && !this._list.childElementCount) {
+      this._status.lastElementChild.classList.remove("visuallyhidden");
+    } else {
+      this._status.lastElementChild.classList.add("visuallyhidden");
     }
   },
   renderToDoList: function () {
-    elements.checkDisplayFilter();
-    const markdown = this._createToDoList(tasks.getList());
+    this.updateDisplayFilter();
+    const sortedTasks = this.sortTasks();
+    const markdown = this._createToDoList(sortedTasks);
     this._list.innerHTML = "";
     this._list.insertAdjacentHTML("beforeend", markdown);
+    this.updateToDoStatus();
+  },
+  sortTasks: function () {
+    let sortedTasks;
+    switch (this.SORTING.current) {
+      case this.SORTING.options.inProgress: {
+        const filteredTasks = tasks.getList().filter(el => el.isDone === false);
+        sortedTasks = this._sortItems(filteredTasks);
+        break;
+      }
+      case this.SORTING.options.done: {
+        const filteredTasks = tasks.getList().filter(el => el.isDone);
+        sortedTasks = this._sortItems(filteredTasks);
+        break;
+      }
+      case this.SORTING.options.low: {
+        const filteredTasks = tasks
+          .getList()
+          .filter(el => el.priority === "low");
+        sortedTasks = this._sortItems(filteredTasks);
+        break;
+      }
+      case this.SORTING.options.medium: {
+        const filteredTasks = tasks
+          .getList()
+          .filter(el => el.priority === "medium");
+        sortedTasks = this._sortItems(filteredTasks);
+        break;
+      }
+      case this.SORTING.options.high: {
+        const filteredTasks = tasks
+          .getList()
+          .filter(el => el.priority === "high");
+        sortedTasks = this._sortItems(filteredTasks);
+        break;
+      }
+      default: {
+        sortedTasks = this._sortItems(tasks.getList());
+        break;
+      }
+    }
+    return sortedTasks;
+  },
+  _sortItems(tasks) {
+    let sortedTasks;
+
+    if (this.SORTING.order === this.SORTING.options.orders.orderDesc) {
+      sortedTasks = tasks.sort((a, b) => b.id - a.id);
+    }
+
+    if (this.SORTING.order === this.SORTING.options.orders.orderDescDone) {
+      sortedTasks = tasks.sort((a, b) => {
+        if (b.isDone && !a.isDone) {
+          return -1;
+        }
+        if (a.isDone && !b.isDone) {
+          return 1;
+        }
+        return b.id - a.id;
+      });
+    }
+
+    if (this.SORTING.order === this.SORTING.options.orders.orderAscDone) {
+      sortedTasks = tasks.sort((a, b) => {
+        if (b.isDone && !a.isDone) {
+          return 1;
+        }
+        if (a.isDone && !b.isDone) {
+          return -1;
+        }
+        return a.id - b.id;
+      });
+    }
+
+    if (this.SORTING.order === this.SORTING.options.orders.orderAsc) {
+      sortedTasks = tasks.sort((a, b) => a.id - b.id);
+    }
+
+    return sortedTasks;
   },
   _renderLanguageOptions: function () {
     const markup = locales.list
@@ -326,6 +451,46 @@ function onInput({ target }) {
   }
 }
 
+function onSortingClick({ target }) {
+  const item = target.closest(".js-todo-filter-item");
+  if (item) {
+    const sortingSetting = item.firstElementChild.dataset.sortingSetting;
+
+    const isDonable = target.closest(".js-filter-donable ");
+    if (elements.SORTING.current !== elements.SORTING.options[sortingSetting]) {
+      elements.SORTING.current = elements.SORTING.options[sortingSetting];
+      if (isDonable && elements.SORTING.options.orders.orderDescDone) {
+        elements.SORTING.order = elements.SORTING.options.orders.orderAsc;
+      }
+      if (isDonable && elements.SORTING.options.orders.orderAscDone) {
+        elements.SORTING.order = elements.SORTING.options.orders.orderDesc;
+      }
+    } else {
+      const order = elements.SORTING.order;
+      if (order === elements.SORTING.options.orders.orderDesc) {
+        if (isDonable) {
+          elements.SORTING.order = elements.SORTING.options.orders.orderAsc;
+        } else {
+          elements.SORTING.order =
+            elements.SORTING.options.orders.orderDescDone;
+        }
+      } else if (order === elements.SORTING.options.orders.orderDescDone) {
+        elements.SORTING.order = elements.SORTING.options.orders.orderAsc;
+      } else if (order === elements.SORTING.options.orders.orderAsc) {
+        if (isDonable) {
+          elements.SORTING.order = elements.SORTING.options.orders.orderDesc;
+        } else {
+          elements.SORTING.order = elements.SORTING.options.orders.orderAscDone;
+        }
+      } else if (order === elements.SORTING.options.orders.orderAscDone) {
+        elements.SORTING.order = elements.SORTING.options.orders.orderDesc;
+      }
+    }
+
+    elements.renderToDoList();
+  }
+}
+
 function onTaskClick({ target }) {
   if (
     target.classList.contains("js-done") &&
@@ -346,6 +511,9 @@ function handleDone(target) {
   task.classList.add("done");
   tasks.updateDoneStatus(taskId, "true");
   storage.updateStorage();
+
+  // add if want marked as done task to disapear instantly
+  // elements.renderToDoList();
 
   console.log(`The task with id \`${taskId}\` was marked as ✔ Done.`);
 }

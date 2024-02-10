@@ -60,7 +60,7 @@ export const list = [
     alias: "russian",
     htmlLangAttribute: "ru",
     iconId: "country-flag-russia-404",
-    isShown: false,
+    isShown: true,
   },
 ];
 

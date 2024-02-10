@@ -20,7 +20,7 @@ const _translations = [
     "de-DE": {},
     "cs-CZ": { textContent: "Seznam úkolů" },
     "fr-FR": {},
-    "uk-UA": { textContent: "Список справ" },
+    "uk-UA": { textContent: "Список задач" },
     "ru-RU": { textContent: "Список задач" },
   },
   {
@@ -31,7 +31,7 @@ const _translations = [
     "de-DE": {},
     "cs-CZ": { textContent: "Úkol" },
     "fr-FR": {},
-    "uk-UA": { textContent: "Справа" },
+    "uk-UA": { textContent: "Завдання" },
     "ru-RU": { textContent: "Задача" },
   },
   {
@@ -102,7 +102,7 @@ const _translations = [
   },
   {
     description: "filter 'all' button",
-    classSelector: ".translation-filter-all-btn",
+    classSelector: ".translation-filter-all-btn-text",
     "en-US": { textContent: "All" },
     "en-GB": { textContent: "All" },
     "de-DE": {},
@@ -113,7 +113,7 @@ const _translations = [
   },
   {
     description: "filter 'in progress' button",
-    classSelector: ".translation-filter-in-progress-btn",
+    classSelector: ".translation-filter-in-progress-btn-text",
     "en-US": { textContent: "In progress" },
     "en-GB": { textContent: "In progress" },
     "de-DE": {},
@@ -124,7 +124,7 @@ const _translations = [
   },
   {
     description: "filter 'done' button",
-    classSelector: ".translation-filter-done-btn",
+    classSelector: ".translation-filter-done-btn-text",
     "en-US": { textContent: "Done" },
     "en-GB": { textContent: "Done" },
     "de-DE": {},
@@ -135,7 +135,7 @@ const _translations = [
   },
   {
     description: "filter 'low' button",
-    classSelector: ".translation-filter-low-btn",
+    classSelector: ".translation-filter-low-btn-text",
     "en-US": { textContent: "Low" },
     "en-GB": { textContent: "Low" },
     "de-DE": {},
@@ -146,7 +146,7 @@ const _translations = [
   },
   {
     description: "filter 'medium' button",
-    classSelector: ".translation-filter-medium-btn",
+    classSelector: ".translation-filter-medium-btn-text",
     "en-US": { textContent: "Medium" },
     "en-GB": { textContent: "Medium" },
     "de-DE": {},
@@ -157,7 +157,7 @@ const _translations = [
   },
   {
     description: "filter 'high' button",
-    classSelector: ".translation-filter-high-btn",
+    classSelector: ".translation-filter-high-btn-text",
     "en-US": { textContent: "High" },
     "en-GB": { textContent: "High" },
     "de-DE": {},
@@ -187,6 +187,58 @@ const _translations = [
     "fr-FR": {},
     "uk-UA": { textContent: "❌ Видалити" },
     "ru-RU": { textContent: "❌ Удалить" },
+  },
+  {
+    description: "status for the to do list when no tasks",
+    classSelector: ".todo-status .no-tasks",
+    "en-US": {
+      textContent:
+        "There are no tasks in the to-do list. You can add the first one.",
+    },
+    "en-GB": {
+      textContent:
+        "There are no tasks in the to-do list. You can add the first one.",
+    },
+    "de-DE": {},
+    "cs-CZ": {
+      textContent:
+        "V seznamu úkolů nejsou žádné úkoly. Chcete-li začít, můžete přidat první.",
+    },
+    "fr-FR": {},
+    "uk-UA": {
+      textContent:
+        "У списку задач немає жодного завдання. Для початку можна додати перше.",
+    },
+    "ru-RU": {
+      textContent:
+        "В списке задач нет ни одной задачи. Для начала можна добавить первую.",
+    },
+  },
+  {
+    description: "status for the to do list whet no tasks after filtration",
+    classSelector: ".todo-status .filter-empty",
+    "en-US": {
+      textContent:
+        "After applying the filter, there are no tasks left. Try a different filter option.",
+    },
+    "en-GB": {
+      textContent:
+        "After applying the filter, there are no tasks left. Try a different filter option.",
+    },
+    "de-DE": {},
+    "cs-CZ": {
+      textContent:
+        "Po použití filtru nezbývají žádné úkoly. Zkuste jinou možnost filtru.",
+    },
+    "fr-FR": {},
+    "uk-UA": {
+      textContent:
+        "Після застосування фільтра не залишилося завдань. Спробуйте іншу опцію фільтра.",
+    },
+    "ru-RU": {
+      textContent:
+        "После применения фильтра не осталось задач. Попробуйте другую опцию фильтра.",
+    },
   },
 ];
 
