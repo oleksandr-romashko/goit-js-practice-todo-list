@@ -517,9 +517,9 @@ function onTaskClick({ target }) {
 }
 
 function onClearAllDataClick({ target }) {
-  const clearDataMessage =
-    "Are you sure you want to delete all app data?\nCan't be undone and all the information (tasks and settings) will be lost!\nPlease, confirm to proceed.";
-  if (confirm(clearDataMessage)) {
+  const localeCode = storage.getCurrentLocale().code;
+  const message = translator.getClearAllConfirmationText(localeCode);
+  if (confirm(message)) {
     localStorage.clear();
     console.log("All data in local storage has been cleared.");
     location.reload();

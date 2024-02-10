@@ -248,8 +248,8 @@ const _translations = [
     "ru-RU": { textContent: "Удалить" },
   },
   {
-    description: "status for the to do list when no tasks",
-    classSelector: ".todo-status .no-tasks",
+    description: "status for the to do list when no tasks in the tasks list",
+    classSelector: ".translation-todo-status-no-task",
     "en-US": {
       textContent:
         "There are no tasks in the to-do list. You can add the first one.",
@@ -274,8 +274,9 @@ const _translations = [
     },
   },
   {
-    description: "status for the to do list whet no tasks after filtration",
-    classSelector: ".todo-status .filter-empty",
+    description:
+      "status for the to do list when there are tasks in tasks list but no tasks shown after filtration",
+    classSelector: ".translation-todo-status-empty-filter",
     "en-US": {
       textContent:
         "After applying the filter, there are no tasks left. Try a different filter option.",
@@ -299,7 +300,93 @@ const _translations = [
         "После применения фильтра не осталось задач. Попробуйте другую опцию фильтра.",
     },
   },
+  {
+    description: "additional explaining text for clear storage button - title",
+    classSelector: ".translation-aux-text-title",
+    "en-US": {
+      textContent: "Clear all application data",
+    },
+    "en-GB": {
+      textContent: "Clear all application data",
+    },
+    "de-DE": {},
+    "cs-CZ": {
+      textContent: "Smazání všech dat aplikace",
+    },
+    "fr-FR": {},
+    "uk-UA": {
+      textContent: "Очистити всі дані застосунку",
+    },
+    "ru-RU": {
+      textContent: "Очистить все данные приложения",
+    },
+  },
+  {
+    description:
+      "additional explaining text for clear storage button - description",
+    classSelector: ".clear-storage .translation-aux-text-description",
+    "en-US": {
+      textContent:
+        "All data associated with this app will be permanently deleted.",
+    },
+    "en-GB": {
+      textContent:
+        "All data associated with this app will be permanently deleted.",
+    },
+    "de-DE": {},
+    "cs-CZ": {
+      textContent:
+        "Všechna data spojená s touto aplikací budou trvale smazána.",
+    },
+    "fr-FR": {},
+    "uk-UA": {
+      textContent:
+        "Усі дані, пов’язані з цим застосунком, буде остаточно видалено.",
+    },
+    "ru-RU": {
+      textContent:
+        "Все данные, связанные с этим приложением, будут удалены без возможности восстановления.",
+    },
+  },
 ];
+
+const _customTranslations = {
+  clearAllConfirmationText: {
+    description: "confirmation box for clear all data",
+    "en-US": {
+      textContent:
+        "Are you sure you want to delete all app data?\n" +
+        "This action cannot be undone and all information (tasks and settings) will be lost!\n" +
+        "Please confirm to proceed.",
+    },
+    "en-GB": {
+      textContent:
+        "Are you sure you want to delete all app data?\n" +
+        "This action cannot be undone and all information (tasks and settings) will be lost!\n" +
+        "Please confirm to proceed.",
+    },
+    "de-DE": {},
+    "cs-CZ": {
+      textContent:
+        "Opravdu chcete smazat všechna data aplikace?\n" +
+        "Tuto akci nelze vrátit zpět a všechny informace (úkoly a nastavení) budou ztraceny!\n" +
+        "Chcete-li pokračovat, potvrďte.",
+    },
+    "fr-FR": {},
+    "uk-UA": {
+      textContent:
+        "Ви впевнені, що бажаєте видалити всі дані програми?\n" +
+        "Цю дію неможливо скасувати, і вся інформація (завдання та налаштування) буде втрачена!\n" +
+        "Будь ласка, підтвердьте, щоб продовжити.",
+    },
+    "ru-RU": {
+      textContent:
+        "Вы уверены, что хотите удалить все данные приложения?\n" +
+        "Это действие невозможно отменить и вся информация (задачи и настройки) будет утеряна!\n" +
+        "Пожалуйста, подтвердите, чтобы продолжить.",
+    },
+  },
+};
 
 export const translatePage = function (locale, tasksNumber) {
   document.documentElement.setAttribute("lang", locale.htmlLangAttribute);
@@ -345,6 +432,10 @@ export function getTaskBtnsTranslation(localeCode) {
     doneBtnText: doneBtnText,
     removeBtnText: removeBtnText,
   };
+}
+
+export function getClearAllConfirmationText(localeCode) {
+  return _customTranslations.clearAllConfirmationText[localeCode].textContent;
 }
 
 function _translateSingleElement(listEl, htmlElement, locale) {
