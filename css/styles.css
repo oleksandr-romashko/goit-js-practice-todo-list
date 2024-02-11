@@ -15,6 +15,7 @@
   --color-green: #4caf50;
   --color-green-darker: #319835;
   --color-green-dark: #18781b;
+  --color-green-kught-transparent: rgba(127, 255,127, 0.1);
   --color-red: #f44336;
   --color-red-darker: #dc2b1e;
   --color-red-dark: #c3160a;
@@ -295,6 +296,10 @@ border: 1px solid var(--color-grey);
 .todo-item .priority {
   color: var(--color-primary-dark);
   cursor: default;
+}
+
+.done {
+  background-color: var(--color-green-kught-transparent);
 }
 
 .done .description,
