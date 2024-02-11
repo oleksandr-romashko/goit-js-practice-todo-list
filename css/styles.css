@@ -10,6 +10,7 @@
 
   --color-grey-lighter: #ccccd6;
   --color-grey: #ccc;
+  --color-grey-transparent: rgba(204, 204, 204, 0.4);
   --color-grey-darker: #a5a5a5;
 
   --color-green: #4caf50;
@@ -219,12 +220,14 @@ visibility:visible;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 16px;
   max-width: 860px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--color-grey-transparent);;
 }
 
 .todo-filter .filter-btn {
