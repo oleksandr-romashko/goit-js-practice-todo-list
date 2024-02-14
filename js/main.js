@@ -504,15 +504,17 @@ function onSortingClick({ target }) {
 }
 
 function onTaskClick({ target }) {
-  if (
-    target.closest(".item-btn").classList.contains("js-btn-done") &&
-    target.closest(".todo-item").dataset.isDone === "false"
-  ) {
-    handleDone(target);
-  }
+  if (target.nodeName === "BUTTON") {
+    if (
+      target.closest(".item-btn").classList.contains("js-btn-done") &&
+      target.closest(".todo-item").dataset.isDone === "false"
+    ) {
+      handleDone(target);
+    }
 
-  if (target.closest(".item-btn").classList.contains("js-btn-remove")) {
-    handleRemove(target);
+    if (target.closest(".item-btn").classList.contains("js-btn-remove")) {
+      handleRemove(target);
+    }
   }
 }
 
