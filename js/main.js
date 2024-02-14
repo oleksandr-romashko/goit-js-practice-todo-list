@@ -516,7 +516,7 @@ function onTaskClick({ target }) {
   }
 }
 
-function onClearAllDataClick({ target }) {
+function onClearAllDataClick() {
   const localeCode = storage.getCurrentLocale().code;
   const message = translator.getClearAllConfirmationText(localeCode);
   if (confirm(message)) {
