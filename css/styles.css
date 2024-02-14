@@ -434,7 +434,7 @@ border: 1px solid var(--color-grey);
 .todo-item .item-btn {
   width: 100%;
   display: flex;
-  min-width: 126px;
+  min-width: 128px;
   justify-content: center;
   align-items: center;
   gap: 6px;
@@ -451,9 +451,6 @@ border: 1px solid var(--color-grey);
 }
 
 @media screen and (min-width: 768px) {
-  .todo-item .item-btn {
-    width: 126px;
-  }
 }
 
 .todo-item .done-btn .done-btn-icon {
