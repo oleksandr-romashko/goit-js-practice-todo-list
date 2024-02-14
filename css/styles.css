@@ -442,7 +442,7 @@ border: 1px solid var(--color-grey);
 
 @media screen and (min-width: 375px) {
   .todo-item .item-btn {
-    width: 156px;
+    max-width: 128px;
   }
 }
 
