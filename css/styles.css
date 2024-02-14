@@ -379,10 +379,6 @@ border: 1px solid var(--color-grey);
   cursor: default;
 }
 
-@media screen and (min-width: 375px) {
-
-}
-
 @media screen and (min-width: 768px) {
   .todo-item .priority {
     margin-left: 24px;
@@ -448,9 +444,6 @@ border: 1px solid var(--color-grey);
   .todo-item .item-btn {
     width: 156px;
   }
-}
-
-@media screen and (min-width: 768px) {
 }
 
 .todo-item .done-btn .done-btn-icon {
