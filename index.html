@@ -12,27 +12,17 @@
     rel="stylesheet">
   <link rel="shortcut icon" href="./img/favicon.svg" type="image/x-icon">
   <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/container.css">
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<!-- TODO: mark all necessary elements tiwh aria-labels and etc. for better accessibility -->
+<!-- TODO: Accessibility: mark all necessary elements with aria-labels and etc. for better accessibility -->
 
 <body>
 
-  <div class="todo-form-wrapper">
+  <div class="todo-form-wrapper container">
 
-    <div class="language-dropdown-picker js-lang-picker">
-      <button class="dropdown-btn js-drop-btn scalable" type="button">
-        <svg class="lang-picker-icon" width="24" height="24">
-          <use href="./img/sprite.svg#languages-icon"></use>
-        </svg>
-        <svg class="lang-picker-icon-arrow" width="16" height="16">
-          <use href="./img/sprite.svg#down-arrow-line"></use>
-        </svg>
-      </button>
-      <ul class="dropdown-content" hidden>
-      </ul>
-    </div>
+
 
     <form class="todo-form js-todo-form" action="submit">
       <h1 class="title translation-form-title">ToDo List</h1>
@@ -50,57 +40,83 @@
       <button class="submit-btn" type="submit">
         <span class="submit-btn-icon translation-submit-btn-icon">+</span>
         <span class="translation-submit-btn-text">Submit</span></button>
-      <!-- TODO Add form status upon action then opasity 0 after some time -->
+
+      <!-- TODO Add form status upon action (task added, marked as done, removed, other) then hide it on timer -->
+
+      <!-- TODO: Add settings button to the top left corner, similato to lang picker
+                     TODO: Settings button features: 
+                     TODO:   - verstion number (if necessary), 
+                     TODO:   - toogle: 'instant remove when marked as done', 
+                     TODO:   - clear all data button is hidden here, 
+                     TODO:   - feedback form / request a feature, 
+                     TODO:   - terms of use and data privacy, 
+                     TODO:   - link to author page) -->
+
+      <div class="language-dropdown-picker js-lang-picker">
+        <button class="dropdown-btn js-drop-btn scalable" type="button">
+          <svg class="lang-picker-icon" width="24" height="24">
+            <use href="./img/sprite.svg#languages-icon"></use>
+          </svg>
+          <svg class="lang-picker-icon-arrow" width="16" height="16">
+            <use href="./img/sprite.svg#down-arrow-line"></use>
+          </svg>
+        </button>
+        <ul class="dropdown-content" hidden>
+        </ul>
+      </div>
+
     </form>
   </div>
 
-  <ul class="todo-filter js-todo-filter visuallyhidden">
-    <li class="js-todo-filter-item">
-      <button class="filter-btn" type="button" data-sorting-setting="all">
-        <span class="translation-filter-all-btn-text">All</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-    <li class="js-todo-filter-item">
-      <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="inProgress">
-        <span class="translation-filter-in-progress-btn-text">In progress</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-    <li class="js-todo-filter-item js-filter-donable">
-      <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="done">
-        <span class="translation-filter-done-btn-text">Done</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-    <li class="js-todo-filter-item">
-      <button class="filter-btn" type="button" data-sorting-setting="low">
-        <span class="translation-filter-low-btn-text">Low</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-    <li class="js-todo-filter-item">
-      <button class="filter-btn" type="button" data-sorting-setting="medium">
-        <span class="translation-filter-medium-btn-text">Medium</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-    <li class="js-todo-filter-item">
-      <button class="filter-btn" type="button" data-sorting-setting="high">
-        <span class="translation-filter-high-btn-text">High</span>
-        <span class="filter-sort-sign"></span>
-      </button>
-    </li>
-  </ul>
+  <div class="filter-wrapper container">
+    <ul class="todo-filter js-todo-filter visuallyhidden">
+      <li class="js-todo-filter-item">
+        <button class="filter-btn" type="button" data-sorting-setting="all">
+          <span class="translation-filter-all-btn-text">All</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+      <li class="js-todo-filter-item">
+        <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="inProgress">
+          <span class="translation-filter-in-progress-btn-text">In progress</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+      <li class="js-todo-filter-item js-filter-donable">
+        <button class="filter-btn js-filter-donable" type="button" data-sorting-setting="done">
+          <span class="translation-filter-done-btn-text">Done</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+      <li class="js-todo-filter-item">
+        <button class="filter-btn" type="button" data-sorting-setting="low">
+          <span class="translation-filter-low-btn-text">Low</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+      <li class="js-todo-filter-item">
+        <button class="filter-btn" type="button" data-sorting-setting="medium">
+          <span class="translation-filter-medium-btn-text">Medium</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+      <li class="js-todo-filter-item">
+        <button class="filter-btn" type="button" data-sorting-setting="high">
+          <span class="translation-filter-high-btn-text">High</span>
+          <span class="filter-sort-sign"></span>
+        </button>
+      </li>
+    </ul>
+  </div>
 
-  <ol class="todo-list js-todo-list"></ol>
+  <ol class="todo-list list container js-todo-list"></ol>
 
-  <div class="todo-status">
+  <div class="todo-status container">
     <p class="no-tasks translation-todo-status-no-task"></p>
     <p class="filter-empty translation-todo-status-empty-filter"></p>
   </div>
 
-  <div class="clear-storage">
+  <div class="clear-storage container">
     <button class="clear-storage-btn js-clear-storage-btn" type="button">
       <div class="clear-icon-container">
         <div class="clear-icon-lid-container">

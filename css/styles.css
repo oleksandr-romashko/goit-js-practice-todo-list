@@ -1,3 +1,5 @@
+/* MOBILE FIRST */
+
 :root {
   /* COLORS */
   --color-primary-black: #212121;
@@ -43,22 +45,50 @@
 }
 
 body {
-  color: var(--color-primary-black);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-body);
   line-height: var(--line-height-body);
+  color: var(--color-primary-black);
+  background-color: var(--color-primary-white);
+}
+
+/* SUBMIT FORM WRAPPER */
+
+.todo-form-wrapper {
+  position: relative;
+  margin-top: 40px;
+}
+
+@media screen and (min-width: 767px) {
+  .todo-form-wrapper {
+    margin-top: 64px;
+  }
 }
 
 /* LANGUAGE PICKER */
 
 .language-dropdown-picker {
-  display: flex;
+  position: absolute;
   top: 24px;
-  right: 20px;
+  right: 12px;
+  display: flex;
   flex-direction: column;
   align-items: end;
-  position: absolute;
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .language-dropdown-picker {
+    top: 24px;
+    right: 24px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+    .language-dropdown-picker {
+      top: 40px;
+      right: 32px;
+    }
 }
 
 .language-dropdown-picker .dropdown-btn {
@@ -68,8 +98,9 @@ body {
   align-items: flex-end;
   padding: 8px;
   line-height: 0;
-  background-color: transparent;
   border: none;
+  background-color: transparent;
+  transition: background-color 250ms var(--timing-function);
 }
 
 .language-dropdown-picker .lang-picker-icon {
@@ -77,6 +108,7 @@ body {
 }
 
 .language-dropdown-picker .lang-picker-icon-arrow {
+  width: 0px;
   transform: scale(0);
   padding-bottom: 8px;
   transition: all 350ms var(--timing-function);
@@ -85,6 +117,7 @@ body {
 
 .language-dropdown-picker .dropdown-btn:hover .lang-picker-icon-arrow,
 .language-dropdown-picker .dropdown-btn:focus .lang-picker-icon-arrow {
+  width: 16px;
   transform: scale(1);
 }
 
@@ -118,23 +151,44 @@ visibility:visible;
 
 /* SUBMIT FORM */
 
-.todo-form-wrapper {
-  position: relative;
-  max-width: 600px;
-  margin-top: 40px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .todo-form {
+  position: relative;
   width: 100%;
+
   display: flex;
   flex-direction: column;
 
-  padding: 24px 32px 32px 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 64px 12px 32px 12px;
+
   border: 1px solid var(--color-grey);
   border-radius: 6px;
   background-color: var(--color-primary-white);
+}
+
+@media screen and (min-width: 375px) {
+  .todo-form {
+    max-width: 600px;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .todo-form {
+    padding: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .todo-form {
+    padding: 24px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .todo-form {
+    padding: 32px;
+  }
 }
 
 .todo-form .title {
@@ -216,18 +270,25 @@ visibility:visible;
 /* FILTER */
 
 .todo-filter {
-  height: fit-content;
+  width: 100%;
+
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 16px;
-  max-width: 860px;
+  padding-bottom: 24px;
+
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+
   border-bottom: 1px solid var(--color-grey-transparent);;
+}
+
+@media screen and (min-width: 768px) {
+  .todo-filter {
+  max-width: 860px;
+  }
 }
 
 .todo-filter .filter-btn {
@@ -238,7 +299,6 @@ visibility:visible;
   background-color: var(--color-blue);
   color: var(--color-primary-white);
 }
-
 
 .todo-filter .filter-btn:hover,
 .todo-filter .filter-btn:focus {
@@ -263,42 +323,71 @@ border: 1px solid var(--color-grey);
   line-height: 0;
 }
 
-
 /* LIST OF TODO ITEMS */
 
 .todo-list {
-  margin-top: 24px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 24px;
-  padding-left: 0;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  row-gap: 8px;
-  max-width: 900px;
+  margin-top: 24px;
+  gap: 8px;
 }
+
+@media screen and (min-width: 768px) {
+  .todo-list {
+    max-width: 900px;
+  }
+}
+
+@media screen and (min-width: 1280px) { }
 
 .todo-item {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 8px 24px;
+  align-items: flex-end;
+  padding: 8px 12px;
   border: 1px solid var(--color-grey);
   border-radius: 5px;
   background-color: var(--color-primary-white);
 }
 
+@media screen and (min-width: 375px) {
+  .todo-item {
+    align-items: center;
+    padding: 16px 24px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .todo-item {
+    flex-direction: row;
+    align-items: flex-end;
+    align-items: baseline;
+    padding: 8px 24px;
+  }
+}
+
 .todo-item .description {
-  margin-right: auto;
-  max-width: 100%;
+  width: 100%;
 }
 
 .todo-item .priority {
+    margin-top: 4px;
   color: var(--color-primary-dark);
   cursor: default;
+}
+
+@media screen and (min-width: 375px) {
+
+}
+
+@media screen and (min-width: 768px) {
+  .todo-item .priority {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
 }
 
 .done {
@@ -311,18 +400,41 @@ border: 1px solid var(--color-grey);
 }
 
 .todo-item .controls {
+  width: 100%;
+  margin-top: 4px;
   display: flex;
-  justify-content: flex-end;
-  min-width: 256px;
+  flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  column-gap: 16px;
-  row-gap: 8px;
+  gap: 8px;
+}
+
+@media screen and (min-width: 375px) {
+  .todo-item .controls {
+    width: fit-content;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    column-gap: 12px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .todo-item .controls {
+    min-width: 264px;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    column-gap: 12px;
+  }
 }
 
 .todo-item .item-btn {
+  width: 100%;
   display: flex;
-  min-width: 120px;
+  min-width: 126px;
   justify-content: center;
   align-items: center;
   gap: 6px;
@@ -330,6 +442,18 @@ border: 1px solid var(--color-grey);
   border: none;
   border-radius: 4px;
   color: var(--color-primary-white);
+}
+
+@media screen and (min-width: 375px) {
+  .todo-item .item-btn {
+    width: 156px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .todo-item .item-btn {
+    width: 126px;
+  }
 }
 
 .todo-item .done-btn .done-btn-icon {
@@ -375,17 +499,38 @@ border: 1px solid var(--color-grey);
 /* CLEAR STORAGE BUTTON */
 
 .clear-storage {
+  max-width: 900px;
   margin-top: 40px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+@media screen and (min-width: 375px) {
+  .clear-storage {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .clear-storage {
+    margin-bottom: 32px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .clear-storage {
+    margin-bottom: 40px;
+  }
 }
 
 .clear-storage .clear-storage-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
   border: none;
   border-radius: 4px;
   color: var(--color-primary-black);
