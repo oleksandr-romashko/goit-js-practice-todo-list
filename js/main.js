@@ -504,7 +504,7 @@ function onSortingClick({ target }) {
 }
 
 function onTaskClick({ target }) {
-  if (target.nodeName === "BUTTON") {
+  if (target.closest(".item-btn")) {
     if (
       target.closest(".item-btn").classList.contains("js-btn-done") &&
       target.closest(".todo-item").dataset.isDone === "false"
